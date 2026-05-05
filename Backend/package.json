@@ -1,0 +1,15 @@
+{
+  "name": "news-hub-backend",
+  "version": "1.0.0",
+  "description": "API de notícias em Node.js com integração ao frontend",
+  "keywords": [
+    "backend"
+  ],
+  "license": "ISC",
+  "author": "José Hermes",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
