@@ -1,3 +1,5 @@
+const pool = require('../config/db');
+
 async function findUserByEmail(email) {
   // $1 evita SQL Injection
   const sql = 'SELECT * FROM users WHERE email = $1 LIMIT 1';

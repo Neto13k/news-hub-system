@@ -1,3 +1,5 @@
+const pool = require('../config/db');
+
 async function findPostById(id) {
   const sql = 'SELECT * FROM posts WHERE id = $1 LIMIT 1';
   
