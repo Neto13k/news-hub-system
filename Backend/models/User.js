@@ -1,6 +1,6 @@
 async function findUserByEmail(email) {
   // $1 evita SQL Injection
-  const sql = 'SELECT * FROM usuarios WHERE email = $1 LIMIT 1';
+  const sql = 'SELECT * FROM users WHERE email = $1 LIMIT 1';
   
   try {
     const result = await pool.query(sql, [email]);
