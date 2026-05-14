@@ -40,3 +40,5 @@ async function createPost(title, content, author_id) {
     throw error;
   }
 }
+
+module.exports = { findPostById, findAllPosts, createPost };
