@@ -2,8 +2,8 @@ const pool = require('../config/db');
 
 // Cria um novo usuário com nome, email e senha criptografada
 async function createUser(name, email, hashedPassword) {
-  const sql = `INSERT INTO users (name, email, password)
-               VALUES ($1, $2, $3) RETURNING id, name, email`;
+  const sql = `INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id, name, email`; 
+  
   try {
     const result = await pool.query(sql, [name, email, hashedPassword]);
     return result.rows[0];
