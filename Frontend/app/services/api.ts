@@ -1,3 +1,4 @@
+// Realiza login de usuário e retorna o token JWT
 export async function UserLogin(email, password) {
     try {
         const response = await fetch('http://localhost:3000/users/login', {
@@ -18,6 +19,7 @@ export async function UserLogin(email, password) {
     }
 }
 
+// Registra um novo usuário na plataforma
 export async function UserRegister(name, email, password) {
     try {
         const response = await fetch('http://localhost:3000/users/register', {
@@ -39,6 +41,7 @@ export async function UserRegister(name, email, password) {
     }
 }
 
+// Busca todos os posts da API
 export async function getPosts() {
     try {
         const response = await fetch('http://localhost:3000/posts', {
@@ -55,6 +58,7 @@ export async function getPosts() {
     }
 }
 
+// Busca um post específico pelo seu ID
 export async function getPostById(id) {
     try {
         const response = await fetch(`http://localhost:3000/posts/${id}`, {
@@ -71,6 +75,7 @@ export async function getPostById(id) {
     }
 }
 
+// Cria um novo post (requer autenticação via token)
 export async function createPost(title, content, token ) {
     try {
         const response = await fetch('http://localhost:3000/posts', {
