@@ -1,14 +1,22 @@
 import {useForm} from "react-hook-form";
-import {useNavigate} from "react-router";
+import {useNavigate, Link} from "react-router";
+import {UserLogin} from "../services/api"
 
 
 export default function Login() {
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm();
 
-    const onSubmit = (data) => {
-        console.log(data);
-        navigate("/login");
+    const onSubmit = async (data: any) => {
+        try {
+            const response = await UserLogin(data.email, data.password);
+            if (response?.token) {
+                localStorage.setItem('token', response.token);
+                navigate('/');
+            }
+        } catch (error) {
+            console.error('Falha ao fazer login:', error);
+        }
     };
 
     return (
