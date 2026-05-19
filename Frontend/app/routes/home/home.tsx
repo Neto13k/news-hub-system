@@ -1,24 +1,17 @@
 import type { Route } from "./+types/home";
-import { useNavigate } from "react-router";
 
+// Importa o componente de home que contém toda a lógica da página
+import Home from "../../components/home";
+
+// Define os metadados da página (título e descrição exibidos no navegador)
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "News Hub" },
+    { name: "description", content: "Welcome to News Hub!" },
   ];
 }
 
-export default function Home() {
-  const navigate = useNavigate();
-  return (
-    <>
-      <h1>Bem vindo ao News Hub</h1>
-      <h2>Já tem uma conta? Faça login</h2>
-      <button onClick={() => navigate("/login")}>Login</button>
-
-      <h2>Não tem uma conta? Cadastre-se</h2>
-      <button onClick={() => navigate("/register")}>Registrar</button>
-
-    </>
-  );
+// Rota principal — renderiza o componente Home
+export default function HomePage() {
+    return <Home />
 }
