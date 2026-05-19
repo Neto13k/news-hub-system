@@ -13,18 +13,14 @@ export default function Register() {
     },
   })
 
-  // Envia os dados do formulário para a API e salva o token retornado
   const onSubmit = async (data: any) => {
     try {
       const response = await UserRegister(data.name, data.email, data.password);
-      if (response && response.token) {
-        // Armazena o token JWT no localStorage para autenticação futura
-        localStorage.setItem('token', response.token);
-        // Redireciona para a página inicial após o cadastro
-        navigate('/');
+      if (response) {
+        navigate('/login');
       }
     } catch (error) {
-      console.error("Erro durante o registro:", error);
+      console.error("Erro ao realizar tentativa de cadastro:", error);
     }
   };
 
