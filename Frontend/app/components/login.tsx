@@ -2,16 +2,19 @@ import {useForm} from "react-hook-form";
 import {useNavigate, Link} from "react-router";
 import {UserLogin} from "../services/api"
 
-
+// Componente de login do usuário
 export default function Login() {
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm();
 
+    // Envia os dados de login para a API e armazena o token retornado
     const onSubmit = async (data: any) => {
         try {
             const response = await UserLogin(data.email, data.password);
             if (response?.token) {
+                // Salva o token JWT no localStorage para autenticar futuras requisições
                 localStorage.setItem('token', response.token);
+                // Redireciona para a página inicial após login bem-sucedido
                 navigate('/');
             }
         } catch (error) {
