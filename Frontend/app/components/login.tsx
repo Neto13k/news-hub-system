@@ -15,7 +15,7 @@ export default function Login() {
                 // Salva o token JWT no localStorage para autenticar futuras requisições
                 localStorage.setItem('token', response.token);
                 // Redireciona para a página inicial após login bem-sucedido
-                navigate('/');
+                navigate('/posts');
             }
         } catch (error) {
             console.error('Falha ao fazer login:', error);
