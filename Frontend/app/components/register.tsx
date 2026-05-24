@@ -2,7 +2,6 @@ import {useForm} from "react-hook-form";
 import {useNavigate, Link} from "react-router";
 import {UserRegister} from "../services/api"
 
-// Componente da página de registro de usuário
 export default function Register() {
   const navigate = useNavigate();
   const { register, handleSubmit, } = useForm({
@@ -13,7 +12,6 @@ export default function Register() {
     },
   })
 
-  // Envia os dados para a API e redireciona para login após cadastro bem-sucedido
   const onSubmit = async (data: any) => {
     try {
       const response = await UserRegister(data.name, data.email, data.password);
@@ -26,33 +24,43 @@ export default function Register() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {/* Campo para o nome completo do usuário */}
-      <input
-        {...register("name", { required: true })}
-        placeholder="Digite o nome completo"
-      />
-
-      {/* Campo para o email do usuário */}
-      <input
-        {...register("email", { required: true })}
-        placeholder="Digite seu email"
-      />
-
-      {/* Campo para a senha do usuário */}
-      <input
-        {...register("password", { required: true })}
-        placeholder="Digite a senha"
-        type="password"
-      />
-      {/* Botão de envio do formulário de registro */}
-      <input type="submit" />
-
-      <p>
-        {/* Link para a página de login, caso o usuário já tenha conta */}
-        Já tem login? <Link to="/login">Faça login aqui.</Link>
-      </p>
-
-    </form>
+    <div className="container">
+      <div className="form-container">
+        <div className="card">
+          <h1>Cadastre-se</h1>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="form-group">
+              <label htmlFor="name">Nome completo:</label>
+              <input
+                id="name"
+                {...register("name", { required: true })}
+                placeholder="Digite o nome completo"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="email">Email:</label>
+              <input
+                id="email"
+                {...register("email", { required: true })}
+                placeholder="Digite seu email"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Senha:</label>
+              <input
+                id="password"
+                {...register("password", { required: true })}
+                placeholder="Digite a senha"
+                type="password"
+              />
+            </div>
+            <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>Cadastrar</button>
+          </form>
+          <p className="help-text">
+            Já tem login? <Link to="/login" className="link">Faça login aqui.</Link>
+          </p>
+        </div>
+      </div>
+    </div>
   )
 }
