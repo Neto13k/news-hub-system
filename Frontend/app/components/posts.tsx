@@ -23,13 +23,18 @@ export default function RenderPosts() {
   }, []);
 
   return (
-    <div>
-      <h1>Posts</h1>
-      <ul>
-        {posts.map((post) => (
-          <li key={post.id}>{post.title} <Link to={`/post/${post.id}`}>View Details</Link></li>
-        ))}
-      </ul>
+    <div className="container">
+      <div className="posts-container">
+        <h1>Posts</h1>
+        <div className="posts-list">
+          {posts.map((post) => (
+            <div key={post.id} className="card post-item">
+              <span className="post-title">{post.title}</span>
+              <Link to={`/post/${post.id}`} className="link post-link">Ver detalhes</Link>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
