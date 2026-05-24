@@ -21,16 +21,23 @@ export default function CreateNewPost() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label>Title</label>
-        <input {...register("title")} />
+    <div className="container">
+      <div className="form-container">
+        <div className="card">
+          <h1>Criar Post</h1>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="form-group">
+              <label htmlFor="title">Título</label>
+              <input id="title" {...register("title")} />
+            </div>
+            <div className="form-group">
+              <label htmlFor="content">Conteúdo</label>
+              <textarea id="content" {...register("content")} />
+            </div>
+            <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>Criar Post</button>
+          </form>
+        </div>
       </div>
-      <div>
-        <label>Content</label>
-        <textarea {...register("content")} />
-        <button type="submit">Create Post</button>
-      </div>
-    </form>
+    </div>
   );
 }
