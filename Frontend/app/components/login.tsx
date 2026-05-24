@@ -2,19 +2,15 @@ import {useForm} from "react-hook-form";
 import {useNavigate, Link} from "react-router";
 import {UserLogin} from "../services/api"
 
-// Componente de login do usuário
 export default function Login() {
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm();
 
-    // Envia os dados de login para a API e armazena o token retornado
     const onSubmit = async (data: any) => {
         try {
             const response = await UserLogin(data.email, data.password);
             if (response?.token) {
-                // Salva o token JWT no localStorage para autenticar futuras requisições
                 localStorage.setItem('token', response.token);
-                // Redireciona para a página inicial após login bem-sucedido
                 navigate('/posts');
             }
         } catch (error) {
@@ -23,18 +19,26 @@ export default function Login() {
     };
 
     return (
-        <>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <label htmlFor="email">Email:</label>
-                <input type="email" id="email" {...register("email")} />
-
-                <label htmlFor="password">Password:</label>
-                <input type="password" id="password" {...register("password")} />
-                <button type="submit">Login</button>
-            </form>
-            <p>
-                Não tem login? <Link to="/register">Cadastre-se aqui.</Link>
-            </p>
-        </>
+        <div className="container">
+            <div className="form-container">
+                <div className="card">
+                    <h1>Login</h1>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className="form-group">
+                            <label htmlFor="email">Email:</label>
+                            <input type="email" id="email" {...register("email")} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="password">Senha:</label>
+                            <input type="password" id="password" {...register("password")} />
+                        </div>
+                        <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>Login</button>
+                    </form>
+                    <p className="help-text">
+                        Não tem login? <Link to="/register" className="link">Cadastre-se aqui.</Link>
+                    </p>
+                </div>
+            </div>
+        </div>
     );
 }
