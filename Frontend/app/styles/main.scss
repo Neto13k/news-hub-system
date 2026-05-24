@@ -5,38 +5,276 @@
 
 // Estilos globais
 body {
-  font-family: $font-main;
+  font-family: 'Inter', $font-main;
   background-color: $background-color;
   color: $text-color;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
   padding: $spacing-lg;
 }
 
-.card {
-  background: white;
-  border-radius: $border-radius;
-  padding: $spacing-md;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+// Navbar
+.navbar {
+  background: rgba(30, 41, 59, 0.95);
+  backdrop-filter: blur(10px);
+  padding: $spacing-md $spacing-lg;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 
-  h2 {
-    color: $primary-color;
-    margin-bottom: $spacing-sm;
+  .navbar-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+
+      a {
+        color: $primary-color;
+        transition: opacity 0.2s;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+
+    nav ul {
+      display: flex;
+      gap: $spacing-lg;
+
+      li a {
+        color: $text-color;
+        font-weight: 500;
+        transition: color 0.2s;
+
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+}
+
+// Card
+.card {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: $border-radius;
+  padding: $spacing-lg;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+  }
+
+  h1, h2, h3 {
+    color: $text-color;
+    margin-bottom: $spacing-md;
   }
 
   p {
-    color: $secondary-color;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+  }
+}
+
+// Formulários
+.form-container {
+  max-width: 500px;
+  margin: $spacing-lg auto;
+}
+
+.form-group {
+  margin-bottom: $spacing-md;
+
+  label {
+    display: block;
+    margin-bottom: $spacing-sm;
+    color: $text-color;
+    font-weight: 500;
   }
 
-  button {
-    margin-top: $spacing-md;
-    background: $primary-color;
-    color: white;
-    border: none;
+  input,
+  textarea {
+    width: 100%;
     padding: $spacing-sm $spacing-md;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: $border-radius;
-    cursor: pointer;
+    background: rgba(30, 41, 59, 0.5);
+    color: $text-color;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
 
-    &:hover {
-      opacity: 0.9;
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.5);
     }
   }
+
+  textarea {
+    min-height: 200px;
+    resize: vertical;
+  }
+}
+
+// Botões
+.btn {
+  display: inline-block;
+  padding: $spacing-sm $spacing-md;
+  border: none;
+  border-radius: $border-radius;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+
+  &.btn-primary {
+    background: $primary-color;
+    color: white;
+
+    &:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+  }
+
+  &.btn-secondary {
+    background: rgba(37, 99, 235, 0.2);
+    color: $primary-color;
+    border: 1px solid $primary-color;
+
+    &:hover {
+      background: rgba(37, 99, 235, 0.3);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// Links
+.link {
+  color: $primary-color;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+  }
+}
+
+// Página inicial
+.home-container {
+  text-align: center;
+  padding: $spacing-lg 0;
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: $spacing-lg;
+    background: linear-gradient(135deg, $primary-color, #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .home-actions {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    align-items: center;
+    margin-top: $spacing-lg;
+
+    .action-card {
+      width: 100%;
+      max-width: 400px;
+
+      h2 {
+        margin-bottom: $spacing-md;
+      }
+    }
+  }
+}
+
+// Listagem de posts
+.posts-container {
+  h1 {
+    font-size: 2rem;
+    margin-bottom: $spacing-lg;
+  }
+
+  .posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  .post-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-md;
+
+    .post-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    .post-link {
+      color: $primary-color;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+// Detalhe do post
+.post-detail {
+  max-width: 800px;
+  margin: 0 auto;
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: $spacing-md;
+  }
+
+  .post-content {
+    margin: $spacing-lg 0;
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+
+  .post-date {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+  }
+}
+
+// Texto auxiliar
+.help-text {
+  text-align: center;
+  margin-top: $spacing-md;
+  color: rgba(255, 255, 255, 0.7);
 }
