@@ -22,13 +22,23 @@ export default function PostContent() {
 
   if (post) {
         return (
-      <div>
-        <h1>{post.title}</h1>
-        <h2>{post.content}</h2>
-        <p>{post.created_at}</p>
+      <div className="container">
+        <div className="post-detail">
+          <div className="card">
+            <h1>{post.title}</h1>
+            <div className="post-content">{post.content}</div>
+            <p className="post-date">Criado em: {new Date(post.created_at).toLocaleDateString('pt-BR')}</p>
+          </div>
+        </div>
       </div>
     );
   } else {
-    return <div>Post not found</div>;
+    return (
+      <div className="container">
+        <div className="card">
+          <h1>Post não encontrado</h1>
+        </div>
+      </div>
+    );
   }
 }
