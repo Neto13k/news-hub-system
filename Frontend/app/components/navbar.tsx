@@ -3,17 +3,17 @@ import { Link } from 'react-router';
 
 const Navbar = () => {
   return (
-    <header>
-      <div>
+    <header className="navbar">
+      <div className="navbar-content">
         <h1><Link to="/">News Hub</Link></h1>
+        <nav>
+          <ul>
+            <li><Link to="/">Início</Link></li>
+            <li><Link to="/posts">Posts</Link></li>
+            <li><Link to="/createpost">Criar Post</Link></li>
+          </ul>
+        </nav>
       </div>
-      <nav>
-        <ul>
-          <li><Link to="/">Início</Link></li>
-          <li><Link to="/posts">Posts</Link></li>
-          <li><Link to="/create">Criar Post</Link></li>
-        </ul>
-      </nav>
     </header>
   );
 };
