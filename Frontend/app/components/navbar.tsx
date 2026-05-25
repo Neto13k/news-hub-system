@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router';
 
 const Navbar = () => {
+  const isAuthenticated = !!localStorage.getItem('token');
+
   return (
     <header className="navbar">
       <div className="navbar-content">
@@ -10,7 +12,7 @@ const Navbar = () => {
           <ul>
             <li><Link to="/">Início</Link></li>
             <li><Link to="/posts">Posts</Link></li>
-            <li><Link to="/createpost">Criar Post</Link></li>
+            {isAuthenticated && <li><Link to="/createpost">Criar Post</Link></li>}
           </ul>
         </nav>
       </div>
