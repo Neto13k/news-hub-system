@@ -1,6 +1,7 @@
 /**
 Configura e inicia o servidor Express com rotas e middlewares.
 */
+require ('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors')
