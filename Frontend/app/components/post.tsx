@@ -12,13 +12,31 @@ interface Post {
 export default function PostContent() {
   const { id } = useParams();
   const [post, setPost] = useState<Post | null>(null); 
+  const [isLoading, setIsLoading] = useState(true);
+  
   useEffect(() => {
     const fetchPost = async () => {
-      const data = await getPostById(id);
-      setPost(data);
+      try {
+        const data = await getPostById(id);
+        setPost(data);
+      } catch (error) {
+        console.error("Erro ao buscar post:", error);
+      } finally {
+        setIsLoading(false);
+      }
     }
     fetchPost();
   }, [id]);
+
+  if (isLoading) {
+    return (
+      <div className="container">
+        <div className="card">
+          <h1>Carregando...</h1>
+        </div>
+      </div>
+    );
+  }
 
   if (post) {
         return (
