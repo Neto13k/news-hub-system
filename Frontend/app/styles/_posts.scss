@@ -1,0 +1,36 @@
+.news-section-title {
+  margin-top: 2rem;
+}
+
+.news-item {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.news-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.news-item-description {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.news-item-source {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.news-item-image {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
