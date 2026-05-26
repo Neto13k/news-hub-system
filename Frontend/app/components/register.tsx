@@ -35,44 +35,40 @@ export default function Register() {
         <div className="card">
           <h1>Cadastre-se</h1>
           {error && (
-            <div style={{ 
-              padding: '1rem', 
-              marginBottom: '1rem', 
-              backgroundColor: 'rgba(239, 68, 68, 0.2)', 
-              border: '1px solid rgba(239, 68, 68, 0.5)', 
-              borderRadius: '8px',
-              color: '#fca5a5'
-            }}>
+            <div className="error-message">
               {error}
             </div>
           )}
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-group">
-              <label htmlFor="name">Nome completo:</label>
+            <div className="form__group">
               <input
                 id="name"
+                className="form__field"
+                placeholder="Nome completo"
                 {...register("name", { required: true })}
-                placeholder="Digite o nome completo"
               />
+              <label htmlFor="name" className="form__label">Nome completo</label>
             </div>
-            <div className="form-group">
-              <label htmlFor="email">Email:</label>
+            <div className="form__group">
               <input
                 id="email"
+                className="form__field"
+                placeholder="Email"
                 {...register("email", { required: true })}
-                placeholder="Digite seu email"
               />
+              <label htmlFor="email" className="form__label">Email</label>
             </div>
-            <div className="form-group">
-              <label htmlFor="password">Senha:</label>
+            <div className="form__group">
               <input
                 id="password"
-                {...register("password", { required: true })}
-                placeholder="Digite a senha"
+                className="form__field"
+                placeholder="Senha"
                 type="password"
+                {...register("password", { required: true })}
               />
+              <label htmlFor="password" className="form__label">Senha</label>
             </div>
-            <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>Cadastrar</button>
+            <button type="submit" className="btn btn-primary mt-1 btn-full">Cadastrar</button>
           </form>
           <p className="help-text">
             Já tem login? <Link to="/login" className="link">Faça login aqui.</Link>
