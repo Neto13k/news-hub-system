@@ -73,18 +73,18 @@ export default function RenderPosts() {
           ))}
         </div>
 
-        <h1 style={{ marginTop: '2rem' }}>Notícias</h1>
+        <h1 className="news-section-title">Notícias</h1>
         <div className="posts-list">
           {news.map((article, index) => (
-            <a key={index} href={article.url} target="_blank" rel="noopener noreferrer" className="card post-item" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1 }}>
+            <a key={index} href={article.url} target="_blank" rel="noopener noreferrer" className="card post-item news-item">
+              <div className="news-item-content">
                 <span className="post-title">{article.title}</span>
                 {article.description && (
-                  <p style={{ margin: 0, fontSize: '0.9rem', color: 'rgba(255, 255, 255, 0.7)' }}>
+                  <p className="news-item-description">
                     {article.description}
                   </p>
                 )}
-                <span style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)' }}>
+                <span className="news-item-source">
                   Fonte: {article.source.name}
                 </span>
               </div>
@@ -92,7 +92,7 @@ export default function RenderPosts() {
                 <img 
                   src={article.urlToImage} 
                   alt={article.title} 
-                  style={{ width: '120px', height: '80px', objectFit: 'cover', borderRadius: '8px' }}
+                  className="news-item-image"
                 />
               )}
             </a>
