@@ -1,8 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { useEffect, useState } from 'react';
 
 const Navbar = () => {
-  const isAuthenticated = !!localStorage.getItem('token');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    setIsAuthenticated(!!localStorage.getItem('token'));
+  }, []);
 
   return (
     <header className="navbar">
