@@ -2,6 +2,10 @@
 
 @use 'variables' as *;
 @use 'reset';
+@use './input';
+@use './error';
+@use './utils';
+@use './posts';
 
 // Estilos globais
 body {
