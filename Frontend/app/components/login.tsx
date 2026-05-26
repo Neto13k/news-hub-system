@@ -30,27 +30,20 @@ export default function Login() {
                 <div className="card">
                     <h1>Login</h1>
                     {error && (
-                        <div style={{ 
-                            padding: '1rem', 
-                            marginBottom: '1rem', 
-                            backgroundColor: 'rgba(239, 68, 68, 0.2)', 
-                            border: '1px solid rgba(239, 68, 68, 0.5)', 
-                            borderRadius: '8px',
-                            color: '#fca5a5'
-                        }}>
+                        <div className="error-message">
                             {error}
                         </div>
                     )}
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="form-group">
-                            <label htmlFor="email">Email:</label>
-                            <input type="email" id="email" {...register("email")} />
+                        <div className="form__group">
+                            <input type="email" id="email" className="form__field" placeholder="Email" {...register("email")} />
+                            <label htmlFor="email" className="form__label">Email</label>
                         </div>
-                        <div className="form-group">
-                            <label htmlFor="password">Senha:</label>
-                            <input type="password" id="password" {...register("password")} />
+                        <div className="form__group">
+                            <input type="password" id="password" className="form__field" placeholder="Senha" {...register("password")} />
+                            <label htmlFor="password" className="form__label">Senha</label>
                         </div>
-                        <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>Login</button>
+                        <button type="submit" className="btn btn-primary mt-1 btn-full">Login</button>
                     </form>
                     <p className="help-text">
                         Não tem login? <Link to="/register" className="link">Cadastre-se aqui.</Link>
