@@ -6,14 +6,16 @@
 @use './error';
 @use './utils';
 @use './posts';
+@use './button';
 
 // Estilos globais
 body {
   font-family: 'Inter', $font-main;
-  background-color: $background-color;
-  color: $text-color;
+  background-color: var(--background);
+  color: var(--text);
   padding: 0;
   min-height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .container {
@@ -24,10 +26,9 @@ body {
 
 // Navbar
 .navbar {
-  background: rgba(30, 41, 59, 0.95);
-  backdrop-filter: blur(10px);
+  background: var(--surface);
   padding: $spacing-md $spacing-lg;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -44,7 +45,7 @@ body {
       font-weight: 700;
 
       a {
-        color: $primary-color;
+        color: var(--primary);
         transition: opacity 0.2s;
 
         &:hover {
@@ -58,12 +59,12 @@ body {
       gap: $spacing-lg;
 
       li a {
-        color: $text-color;
+        color: var(--text);
         font-weight: 500;
         transition: color 0.2s;
 
         &:hover {
-          color: $primary-color;
+          color: var(--primary);
         }
       }
     }
@@ -72,26 +73,25 @@ body {
 
 // Card
 .card {
-  background: rgba(30, 41, 59, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: $border-radius;
   padding: $spacing-lg;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
   }
 
   h1, h2, h3 {
-    color: $text-color;
+    color: var(--text);
     margin-bottom: $spacing-md;
   }
 
   p {
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-secondary);
     line-height: 1.6;
   }
 }
@@ -108,7 +108,7 @@ body {
   label {
     display: block;
     margin-bottom: $spacing-sm;
-    color: $text-color;
+    color: var(--text);
     font-weight: 500;
   }
 
@@ -116,21 +116,21 @@ body {
   textarea {
     width: 100%;
     padding: $spacing-sm $spacing-md;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--border);
     border-radius: $border-radius;
-    background: rgba(30, 41, 59, 0.5);
-    color: $text-color;
+    background: var(--surface-2);
+    color: var(--text);
     font-size: 1rem;
     transition: border-color 0.2s, box-shadow 0.2s;
 
     &:focus {
       outline: none;
-      border-color: $primary-color;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(241, 126, 3, 0.2);
     }
 
     &::placeholder {
-      color: rgba(255, 255, 255, 0.5);
+      color: var(--text-secondary);
     }
   }
 
@@ -140,54 +140,17 @@ body {
   }
 }
 
-// Botões
-.btn {
-  display: inline-block;
-  padding: $spacing-sm $spacing-md;
-  border: none;
-  border-radius: $border-radius;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: center;
-
-  &.btn-primary {
-    background: $primary-color;
-    color: white;
-
-    &:hover {
-      background: #1d4ed8;
-      transform: translateY(-1px);
-    }
-  }
-
-  &.btn-secondary {
-    background: rgba(37, 99, 235, 0.2);
-    color: $primary-color;
-    border: 1px solid $primary-color;
-
-    &:hover {
-      background: rgba(37, 99, 235, 0.3);
-    }
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-}
-
 // Links
 .link {
-  color: $primary-color;
+  color: var(--primary);
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s;
 
   &:hover {
-    color: #1d4ed8;
+    color: var(--primary);
     text-decoration: underline;
+    opacity: 0.8;
   }
 }
 
@@ -199,7 +162,7 @@ body {
   h1 {
     font-size: 2.5rem;
     margin-bottom: $spacing-lg;
-    background: linear-gradient(135deg, $primary-color, #60a5fa);
+    background: linear-gradient(135deg, var(--primary), rgb(255, 150, 50));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -248,7 +211,7 @@ body {
     }
 
     .post-link {
-      color: $primary-color;
+      color: var(--primary);
       font-size: 0.9rem;
     }
   }
@@ -271,7 +234,7 @@ body {
   }
 
   .post-date {
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-secondary);
     font-size: 0.9rem;
   }
 }
@@ -280,5 +243,5 @@ body {
 .help-text {
   text-align: center;
   margin-top: $spacing-md;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-secondary);
 }
