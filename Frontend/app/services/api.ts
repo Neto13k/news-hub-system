@@ -120,7 +120,8 @@ export async function getNews(): Promise<NewsResponse | undefined> {
         const response = await fetch('http://localhost:3000/news', {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'authorization': `Bearer ${localStorage.getItem('token')}`
             }
         });
         const data = await response.json();
