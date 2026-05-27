@@ -7,9 +7,11 @@ import {
   ScrollRestoration,
 } from "react-router";
 
+import React, {useState, useEffect } from "react";
 import type { Route } from "./+types/root";
 import "./styles/main.scss";
 import Navbar from "./components/navbar";
+import { ThemeContext } from "./context/ThemeContext";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -34,7 +36,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <Navbar />
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -44,7 +45,28 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+
+  const [theme, setTheme] = useState('dark');
+  
+  const toggleTheme = () => {
+  console.log('toggleTheme chamado, tema atual:', theme);
+  setTheme(theme === 'dark' ? 'light' : 'dark');
+};
+  
+ useEffect(() => {
+  const saved = localStorage.getItem('theme');
+  const initial = saved || 'dark';
+    console.log('useEffect rodou, tema:', theme);
+  document.body.className = theme;
+  localStorage.setItem('theme', theme);
+}, [theme]);
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <Navbar />
+      <Outlet />
+    </ThemeContext.Provider>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
