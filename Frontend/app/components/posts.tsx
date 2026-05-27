@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import { Link } from "react-router";
 import { getPosts, getNews } from "../services/api";
 
@@ -20,11 +21,18 @@ interface NewsArticle {
 }
 
 export default function RenderPosts() {
+  const navigate = useNavigate();
   const [posts, setPosts] = useState<Post[]>([]);
   const [news, setNews] = useState<NewsArticle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Você precisa estar logado para acessar esta página.");
+      navigate('/login'); // Redireciona para a página de login
+      return;
+    }
     const fetchData = async () => {
       try {
         const [postsResult, newsResult] = await Promise.all([
