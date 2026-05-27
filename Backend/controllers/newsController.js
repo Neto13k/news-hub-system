@@ -1,14 +1,14 @@
 async function getNews(req, res) {
   try {
-    const apiKey = process.env.NEWS_API_KEY;
+    const apiKey = process.env.GNEWS_API_KEY;
     if (!apiKey) {
       return res.status(500).json({ error: 'Chave da API não configurada' });
     }
 
-    const url = new URL('https://newsapi.org/v2/top-headlines');
+    const url = new URL('https://gnews.io/api/v4/top-headlines');
+    url.searchParams.append('lang', 'pt');
     url.searchParams.append('country', 'br');
-    url.searchParams.append('apiKey', apiKey);
-    url.searchParams.append('pageSize', '10');
+    url.searchParams.append('token', process.env.GNEWS_API_KEY);
 
     const response = await fetch(url.toString());
     
