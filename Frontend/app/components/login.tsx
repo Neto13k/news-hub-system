@@ -14,6 +14,8 @@ export default function Login() {
             const response = await UserLogin(data.email, data.password);
             if (response?.token) {
                 localStorage.setItem('token', response.token);
+                localStorage.setItem('email', response.user.email)
+                window.location.href = '/posts';
                 navigate('/posts');
             } else if (response?.error) {
                 setError(response.error);
