@@ -1,6 +1,8 @@
 # News Hub System
 
-Portal de notícias fullstack com autenticação JWT. Exibe notícias em tempo real via NewsAPI e permite que usuários cadastrados publiquem suas próprias notícias.
+Portal de notícias fullstack com autenticação JWT, dark/light mode e integração com GNews API. Exibe notícias em tempo real e permite que usuários cadastrados publiquem suas próprias notícias.
+
+> **Sobre o projeto:** Este projeto foi desenvolvido de forma independente por José Hermes como trabalho de formação em desenvolvimento fullstack. Durante o processo, foram utilizadas ferramentas de IA como assistentes de apoio — Claude (Anthropic) para orientação arquitetural e revisão de código, e GitHub Copilot para sugestões de código. Todo o planejamento, decisões técnicas e implementação foram conduzidos pelo autor.
 
 ---
 
@@ -17,9 +19,23 @@ Portal de notícias fullstack com autenticação JWT. Exibe notícias em tempo r
 ### Frontend
 - React 19 + React Router 7
 - TypeScript
-- SASS — estilização
+- SASS (sass-embedded) — estilização com dark/light mode
 - react-hook-form — gerenciamento de formulários
 - Vite — bundler
+
+---
+
+## Funcionalidades
+
+- Cadastro e login de usuários com autenticação JWT
+- Listagem de notícias em tempo real via GNews API (apenas usuários autenticados)
+- Listagem de posts criados pelos usuários (apenas usuários autenticados)
+- Criação de posts (apenas usuários autenticados)
+- Visualização de post individual
+- Dark/Light mode com persistência no localStorage
+- Navbar dinâmica com links condicionais baseados em autenticação
+- Exibição do email do usuário logado na Navbar
+- Logout com limpeza do localStorage
 
 ---
 
@@ -34,7 +50,7 @@ news-hub-system/
 │   ├── controllers/
 │   │   ├── userController.js     # Register e Login
 │   │   ├── postController.js     # Listar, buscar e criar posts
-│   │   └── newsController.js     # Busca notícias da NewsAPI
+│   │   └── newsController.js     # Busca notícias da GNews API
 │   ├── middleware/
 │   │   └── authMiddleware.js     # Verificação do token JWT
 │   ├── models/
@@ -43,7 +59,7 @@ news-hub-system/
 │   ├── routes/
 │   │   ├── userRoutes.js         # /users/register e /users/login
 │   │   ├── postRoutes.js         # /posts
-│   │   └── newsRoutes.js         # /news
+│   │   └── newsRoutes.js         # /news (protegida por auth)
 │   ├── .gitignore
 │   ├── package.json
 │   └── server.js
@@ -51,13 +67,15 @@ news-hub-system/
 └── Frontend/
     ├── app/
     │   ├── components/
-    │   │   ├── home.tsx           # Landing page
+    │   │   ├── home.tsx           # Landing page pública
     │   │   ├── login.tsx          # Formulário de login
     │   │   ├── register.tsx       # Formulário de cadastro
-    │   │   ├── posts.tsx          # Listagem de posts
+    │   │   ├── posts.tsx          # Listagem de posts e notícias
     │   │   ├── post.tsx           # Post individual
     │   │   ├── createPost.tsx     # Formulário de criação de post
-    │   │   └── navbar.tsx         # Navegação global
+    │   │   └── navbar.tsx         # Navegação global dinâmica
+    │   ├── context/
+    │   │   └── ThemeContext.ts    # Contexto global de tema
     │   ├── routes/
     │   │   ├── home/
     │   │   ├── login/
@@ -66,10 +84,15 @@ news-hub-system/
     │   ├── services/
     │   │   └── api.ts             # Funções fetch para o backend
     │   ├── styles/
-    │   │   ├── _variables.scss
-    │   │   ├── _reset.scss
-    │   │   └── main.scss
-    │   ├── root.tsx
+    │   │   ├── _variables.scss    # Variáveis e paletas dark/light
+    │   │   ├── _reset.scss        # Reset global
+    │   │   ├── _input.scss        # Estilos de inputs
+    │   │   ├── _button.scss       # Estilos de botões
+    │   │   ├── _posts.scss        # Estilos da listagem
+    │   │   ├── _error.scss        # Estilos de erros
+    │   │   ├── _utils.scss        # Utilitários
+    │   │   └── main.scss          # Importações e estilos globais
+    │   ├── root.tsx               # Layout raiz com gerenciamento de tema
     │   └── routes.ts
     └── package.json
 ```
@@ -80,7 +103,7 @@ news-hub-system/
 
 - Node.js 18+
 - PostgreSQL 14+
-- Chave da [NewsAPI](https://newsapi.org/register) (gratuita)
+- Chave da [GNews API](https://gnews.io) (gratuita — 100 req/dia)
 
 ---
 
@@ -110,7 +133,7 @@ DB_PASSWORD=sua_senha
 DB_PORT=5432
 PORT=3000
 JWT_SECRET=sua_chave_secreta_longa_e_aleatoria
-NEWS_API_KEY=sua_chave_da_newsapi
+GNEWS_API_KEY=sua_chave_da_gnews
 ```
 
 Para gerar um JWT_SECRET seguro:
@@ -119,7 +142,7 @@ Para gerar um JWT_SECRET seguro:
 node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
 ```
 
-Para obter a `NEWS_API_KEY`, cadastre-se gratuitamente em [newsapi.org/register](https://newsapi.org/register).
+Para obter a `GNEWS_API_KEY`, cadastre-se gratuitamente em [gnews.io](https://gnews.io).
 
 ### 3. Criar o banco de dados
 
@@ -236,7 +259,7 @@ Authorization: Bearer eyJhbGci...
 
 | Método | Rota | Descrição | Auth |
 |--------|------|-----------|------|
-| GET | `/news` | Busca top 10 notícias do Brasil via NewsAPI | Não |
+| GET | `/news` | Busca notícias em tempo real via GNews API | Sim |
 
 ---
 
@@ -244,12 +267,28 @@ Authorization: Bearer eyJhbGci...
 
 | URL | Página | Auth |
 |-----|--------|------|
-| `/` | Landing page | Não |
+| `/` | Landing page pública | Não |
 | `/login` | Login | Não |
 | `/register` | Cadastro | Não |
-| `/posts` | Listagem de posts e notícias | Não |
+| `/posts` | Listagem de posts e notícias | Sim |
 | `/post/:id` | Post individual | Não |
 | `/createpost` | Criar post | Sim |
+
+---
+
+## Tema
+
+O projeto suporta dark e light mode com alternância via botão na Navbar. A preferência é salva no `localStorage` e aplicada automaticamente nas próximas visitas.
+
+**Paleta dark:**
+- Background: `#0a0a0a`
+- Surface: `#141414`
+- Primary: `rgb(241, 126, 3)`
+
+**Paleta light:**
+- Background: `#f5f5f5`
+- Surface: `#ffffff`
+- Primary: `rgb(241, 126, 3)`
 
 ---
 
@@ -260,10 +299,13 @@ Authorization: Bearer eyJhbGci...
 - Queries com parâmetros ($1, $2...) — protegido contra SQL Injection
 - Token enviado via header `Authorization: Bearer <token>`
 - Variáveis sensíveis em `.env` — nunca comitar no repositório
-- Botão "Criar Post" oculto para usuários não autenticados
+- Rotas protegidas redirecionam para `/login` se não autenticado
+- Navbar dinâmica oculta recursos restritos para não autenticados
 
 ---
 
 ## Autor
 
-José Hermes
+**José Hermes**
+
+Projeto desenvolvido de forma independente como trabalho de formação em desenvolvimento fullstack. Ferramentas de IA utilizadas como assistentes de apoio: [Claude](https://claude.ai) (Anthropic) e [GitHub Copilot](https://github.com/features/copilot).
