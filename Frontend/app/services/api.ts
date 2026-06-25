@@ -1,3 +1,5 @@
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 interface NewsArticle {
   source: { id: string | null; name: string };
   author: string | null;
@@ -18,7 +20,7 @@ interface NewsResponse {
 // Realiza login de usuário e retorna o token JWT
 export async function UserLogin(email: string, password: string) {
     try {
-        const response = await fetch('http://localhost:3000/users/login', {
+        const response = await fetch(`${API_URL}/users/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -39,7 +41,7 @@ export async function UserLogin(email: string, password: string) {
 // Registra um novo usuário na plataforma
 export async function UserRegister(name: string, email: string, password: string) {
     try {
-        const response = await fetch('http://localhost:3000/users/register', {
+        const response = await fetch(`${API_URL}/users/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -61,7 +63,7 @@ export async function UserRegister(name: string, email: string, password: string
 // Busca todos os posts da API
 export async function getPosts() {
     try {
-        const response = await fetch('http://localhost:3000/posts', {
+        const response = await fetch(`${API_URL}/posts`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -78,7 +80,7 @@ export async function getPosts() {
 // Busca um post específico pelo seu ID
 export async function getPostById(id: string) {
     try {
-        const response = await fetch(`http://localhost:3000/posts/${id}`, {
+        const response = await fetch(`${API_URL}/posts/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -95,7 +97,7 @@ export async function getPostById(id: string) {
 // Cria um novo post (requer autenticação via token)
 export async function createPost(title: string, content: string, token: string) {
     try {
-        const response = await fetch('http://localhost:3000/posts', {
+        const response = await fetch(`${API_URL}/posts`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -117,7 +119,7 @@ export async function createPost(title: string, content: string, token: string) 
 // Busca notícias da NewsAPI via backend
 export async function getNews(): Promise<NewsResponse | undefined> {
     try {
-        const response = await fetch('http://localhost:3000/news', {
+        const response = await fetch(`${API_URL}/news`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
