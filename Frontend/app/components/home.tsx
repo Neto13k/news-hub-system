@@ -1,7 +1,17 @@
 import { useNavigate } from "react-router";
+import { useEffect } from "react";
 
 export default function Home() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("token");
+      if (token) {
+        navigate("/posts");
+      }
+    }
+  }, [navigate]);
 
   return (
     <div className="container">
