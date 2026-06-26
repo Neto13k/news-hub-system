@@ -6,6 +6,12 @@ Portal de notícias fullstack com autenticação JWT, dark/light mode e integra�
 
 ---
 
+## Veja o projeto rodando ao vivo
+
+[![Acessar aplicação](https://img.shields.io/badge/Acessar%20aplicação-news--hub--system.vercel.app-orange?style=for-the-badge)](https://news-hub-system.vercel.app)
+
+---
+
 ## Tecnologias
 
 ### Backend
@@ -198,6 +204,20 @@ cd Frontend
 npm run dev
 # Aplicação rodando em http://localhost:5173
 ```
+
+---
+
+## Deploy
+
+O projeto está publicado e acessível em produção.
+
+**Frontend:** [https://news-hub-system.vercel.app](https://news-hub-system.vercel.app)
+
+| Camada | Plataforma | Descrição |
+|--------|------------|-----------|
+| Frontend | [Vercel](https://vercel.com) | Deploy automático a partir do repositório |
+| Backend | [Render](https://render.com) | Servidor Node.js + Express em produção |
+| Banco de dados | [Neon](https://neon.tech) | PostgreSQL serverless |
 
 ---
 
